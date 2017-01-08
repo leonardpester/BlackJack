@@ -1,0 +1,8 @@
+﻿  ProiectIP_Pester_Leonard.cpp
+f:\c++\proiectip\proiectip_pester_leonard\proiectip_pester_leonard.cpp(80): warning C4018: '<': signed/unsigned mismatch
+f:\c++\proiectip\proiectip_pester_leonard\proiectip_pester_leonard.cpp(236): warning C4018: '<': signed/unsigned mismatch
+f:\c++\proiectip\proiectip_pester_leonard\proiectip_pester_leonard.cpp(276): warning C4018: '<': signed/unsigned mismatch
+f:\c++\proiectip\proiectip_pester_leonard\proiectip_pester_leonard.cpp(318): warning C4018: '<': signed/unsigned mismatch
+f:\c++\proiectip\proiectip_pester_leonard\proiectip_pester_leonard.cpp(664): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  ProiectIP_Pester_Leonard.vcxproj -> F:\c++\ProiectIP\Debug\ProiectIP_Pester_Leonard.exe
+  ProiectIP_Pester_Leonard.vcxproj -> F:\c++\ProiectIP\Debug\ProiectIP_Pester_Leonard.pdb (Full PDB)

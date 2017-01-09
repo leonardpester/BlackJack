@@ -33,6 +33,27 @@ int main();
 
 
 
+
+int scrie()
+{
+
+	std::ofstream myfile("lista.txt", std::ios::app);
+	char t[50];
+	int bani;
+	cout << endl << " Alegeti-va un nume de utilizator5!\n Acesta trebuie sa fie fara spatii,doar litere mici fara cifre si fara spatii!\n Exemplu: gheorghevasile\n Introduceti numele jucatorului: ";
+
+	cin >> t;
+	cout << endl << " Introduceti suma de bani pe care doriti sa o aveti in contul BLACKJACJK: ";
+	cin >> bani;
+	myfile << endl << t << " " << bani;
+	myfile.close();
+	cout << endl << endl;
+	meniu();
+	return 0;
+}
+
+
+
 int meniu() {
 	char selection;
 
@@ -89,6 +110,39 @@ int meniu() {
 }
 
 
+//permite rejucarea sau intoarcerea la meniu
+int again() {
+	cout << endl << "Mai jucati un joc ? Tastati 'D' pentru 1vs1 ,'P' pentru 1 vs computer sau 'M' pentru a reveni la meniu" << " ";
+	char tasta;
+	cin >> tasta;
+	if (tasta == 'P')
+		game();
+	if (tasta == 'D')
+		pariu();
+	if (tasta == 'M')
+		main();
+	return 0;
+
+}
+
+// player vs player prima-mana
+int game2() {
+	resetare();
+
+	carte_pl1[i] = random(); suma_pl1 = suma_pl1 + carte_pl1[i]; i++;
+	carte_pl1[i] = random(); suma_pl1 = suma_pl1 + carte_pl1[i]; i++;
+	carte_pl2[j] = random(); suma_pl2 = suma_pl2 + carte_pl2[j]; j++;
+	carte_pl2[j] = random(); suma_pl2 = suma_pl2 + carte_pl2[j]; j++;
+	cout << endl << "  Player1  Cartile tale sunt:  " << carte_pl1[i - 2] << "  " << carte_pl1[i - 1] << "  Player1  Suma ta este: " << suma_pl1;
+	cout << endl << "  Player2  Cartile tale sunt:  " << carte_pl2[j - 2] << "  " << carte_pl2[j - 1] << "  Player2  Suma ta este: " << suma_pl2;
+	cout << endl << endl;
+	second2();
+
+	return 0;
+}
+
+/
+}
 
 // MAIN
 int main()

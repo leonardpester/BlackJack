@@ -33,7 +33,6 @@ int main();
 
 
 
-
 int scrie()
 {
 
@@ -52,6 +51,194 @@ int scrie()
 	return 0;
 }
 
+
+//functia care permite modificarea numelui unui jucator si/sau suma de bani pe care o are acesta in cont
+int modifica()
+{
+
+	afiseaza_lista();
+	cout << endl << endl;
+
+	ifstream fin("lista.txt");
+
+	string date;
+
+
+
+	string buffer, buf, sir, k, sir1, spatiu = " ";
+	int m = 0, n = 0, at, kill = 0;
+	cout << endl << " Introduceti numele dumneavoastra: ";
+	cin >> name1;
+	int aux1 = suma(name1);
+	cout << endl << " Daca doriti sa adaugati bani in cont tastati (B) ";
+	cout << endl << " Dca doriti sa va schimbati numele tastati(N) |";
+	cout << endl << " Tastati alegerea ( B / N ) :";
+	cin >> raspuns;
+	if (raspuns == 'N') {
+		cout << endl << " Introduceti noul nume: ";
+		cin >> name2;
+
+
+
+		while (!fin.eof())
+		{
+			fin >> buffer;
+
+
+			if (buffer == name1)
+				buffer = name2;
+			if (buf != buffer)
+			{
+				buffer += spatiu;
+				date += buffer;
+			}
+
+			buf = buffer;
+
+		}
+	}
+	else
+	{
+		cout << endl << " Introduceti suma pe care doriti sa o adaugati: ";
+		cin >> at;
+
+
+
+		while (!fin.eof()) {
+			fin >> buffer;
+
+			if (kill == 1) {
+				buffer = static_cast<ostringstream*>(&(ostringstream() << (aux1 + at)))->str();
+				kill = 0;
+			}
+			if (buffer == name1)
+				kill = 1;
+
+			if (buf != buffer) {
+				buffer += spatiu;
+				date += buffer;
+			}
+
+			buf = buffer;
+
+		}
+
+
+	}
+
+	fin.close();
+	deleteall();
+
+	ofstream fout("lista.txt");
+	for (int x = 0; x < date.length(); x++)
+	{
+		k = date.at(x);
+		if (k.compare(spatiu) != 0)
+			fout << k;
+		else {
+			m++;
+			if (m % 2 == 0)
+				fout << endl;
+			else
+				fout << spatiu;
+
+		}
+	}
+	fout.close();
+	cout << endl << " Modificare completa!!! ";
+	meniu();
+	return 0;
+}
+
+
+int suma(string sm) {
+	ifstream fin("lista.txt");
+	string date;
+	string buffer, sir, buf, k, spatiu = " ";
+
+
+	while (!fin.eof()) {
+		fin >> buffer;
+		if (sm == buffer) {
+			fin >> buffer;
+			date += buffer;
+		}
+
+	}
+
+	fin.close();
+	int value = atoi(date.c_str());
+
+	return value;
+}
+
+
+
+
+
+int deleteall()
+{
+	std::ofstream ofs;
+	ofs.open("lista.txt", std::ofstream::out | std::ofstream::trunc);
+	ofs.close();
+	return 0;
+}
+
+
+//numere random
+int random() {
+	int carte;
+	//var = rand() % 9999999;
+	//(time(NULL));
+	carte = rand() % 11 + 1;
+	return carte;
+}
+
+
+//reseteaza niste variabile utile la unele functii
+int resetare() {
+	int k;
+	suma_pl = NULL, suma_pc = NULL, pl = NULL, pc = NULL; aux = 0;
+	raspuns = NULL; carte_pl1[15], carte_pl2[15], suma_pl1 = NULL, suma_pl2 = NULL;
+
+	for (k = i; k >= 0; k--)
+		carte_pl[k] = NULL;
+	for (k = j; k >= 0; k--)
+		carte_pc[k] = NULL;
+	for (k = i; k >= 0; k--)
+		carte_pl1[k] = NULL;
+	for (k = i; k >= 0; k--)
+		carte_pl2[k] = NULL;
+	i = NULL, j = NULL;
+	return 0;
+
+
+}
+
+// player vs computer
+
+
+
+
+
+// afiseza prima mana , primele doua carti pentru player si computer
+int game() {
+	resetare();
+
+	carte_pl[i] = random(); suma_pl = suma_pl + carte_pl[i]; i++;
+	carte_pl[i] = random(); suma_pl = suma_pl + carte_pl[i]; i++;
+	carte_pc[j] = random(); suma_pc = suma_pc + carte_pc[j]; j++;
+	carte_pc[j] = random(); suma_pc = suma_pc + carte_pc[j]; j++;
+	cout << endl << " Cartile tale sunt: " << carte_pl[i - 2] << "  " << carte_pl[i - 1] << "  Suma ta este: " << suma_pl;
+	cout << endl << " Cartile Dealerului: " << "  " << "(INTOARSA)" << "  " << carte_pc[j - 1] << "  Suma dealer este: " << suma_pc;
+	secondh();
+
+	return 0;
+
+}
+
+
+//meniul principal
 
 
 int meniu() {
@@ -141,7 +328,86 @@ int game2() {
 	return 0;
 }
 
-/
+// player vs player
+int second2() {
+	while (aux == 0) {
+		if (pl != 1) {
+			if (suma_pl1 >= 21)
+				pl = 1;
+			else {
+				cout << endl << " Player1: inca o carte? D/N  " << "  ";
+				cin >> raspuns;
+				if (raspuns == 'D') {
+					carte_pl1[i] = random(); suma_pl1 = suma_pl1 + carte_pl1[i]; i++;
+					cout << " Player1: cartea ta este:  " << carte_pl1[i - 1] << "\n Player1:  suma este:   " << suma_pl1 << endl;
+				}
+				else {
+					pl = 1;
+					cout << endl << " " << " Player1: suma ta finala este: " << suma_pl1;
+				}
+			}
+			if (suma_pl1 > 21) {
+				pc = 1;
+				pl = 1;
+
+			}
+			raspuns = NULL;
+		}
+		if (pc != 1) {
+			if (suma_pl2 >= 21)
+				pc = 1;
+			else {
+				cout << endl << " Player2:Inca o carte? D/N" << "  ";
+				cin >> raspuns;
+				if (raspuns == 'D') {
+					carte_pl2[j] = random(); suma_pl2 = suma_pl2 + carte_pl2[j]; j++;
+					cout << " Player2: Cartea ta este:  " << carte_pl2[j - 1] << " \n Player2-Suma este:   " << suma_pl2 << endl;
+				}
+				else {
+					pc = 1;
+					cout << endl << " " << " Player2: Suma ta finala este: " << suma_pl2;
+				}
+			}
+
+			if (suma_pl2 >= 21) {
+				pc = 1;
+				pl = 1;
+			}
+		}
+		raspuns = NULL;
+
+		if (pl == 1 && pc == 1)
+			aux = 1;
+	}
+	cout << endl;
+	if (pl == 1 && pc == 1) {
+		cout << endl << " Suma player1: " << suma_pl1 << endl;
+		cout << " Suma player2: " << suma_pl2 << endl;
+
+		if (suma_pl1 > suma_pl2 && suma_pl1 <= 21) {
+			cout << endl << " Castigator Player1";
+			el = 1;
+		}
+		if (suma_pl2 > suma_pl1 && suma_pl2 <= 21) {
+			cout << endl << " Castigator Player2";
+			el = 2;
+		}
+		if (suma_pl1 > 21 && suma_pl2 <= 21) {
+			cout << endl << " Castigator Player2";
+			el = 2;
+		}
+		if (suma_pl1 == suma_pl2) {
+			cout << endl << "   EGALITATE";
+			el = 0;
+		}
+		if (suma_pl2 > 21 && suma_pl1 < 21) {
+			el = 1;
+			cout << endl << "Castigator Player1";
+		}
+		cout << endl << endl << endl << endl;
+		add(el);
+	}
+	return 0;
 }
 
 // MAIN
